@@ -31,3 +31,7 @@ assert network.parse.address(address) is not None
 tx = network.tx_utils.create_tx([spendable], [payable])
 
 print("here is the transaction: %s" % tx.as_hex(include_unspents=True))
+
+
+# sign TX
+# https://github.com/richardkiss/pycoin/blob/master/recipes/multisig/4_sign_tx.py
