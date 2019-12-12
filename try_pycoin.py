@@ -22,13 +22,38 @@ print(address)
 
 
 tx_id = "11e0a8a0ced85b8fd854527d8eb0e675bbba411ea5e04df75331908f9c4363a2"
-URL = f"https://blockchain.info/rawtx/{tx_id}"
 
-req = requests.get(url=URL)
+url_rawtx_bcinfo = f"https://blockchain.info/rawtx/{tx_id}"
+
+req = requests.get(url=url_rawtx_bcinfo)
 data = req.json()
-
+print("rawtx bcinfo:")
 pp(req)
 pp(data)
+
+url_rawtx_insight = f"https://insight.bitpay.com/api/rawtx/{tx_id}"
+
+req = requests.get(url=url_rawtx_insight)
+data = req.json()
+print("rawtx insight:")
+pp(req)
+
+tx_raw = data["rawtx"]
+
+tx_prev = network.tx.from_hex(tx_raw)
+tx_prev_out_index = 0
+spendable_output = tx_prev.tx_outs_as_spendable()[tx_prev_out_index]
+
+print("prev tx:")
+pp(tx_prev)
+print("spendable output:")
+pp(spendable_output)
+
+
+assert network.parse.address(address) is not None
+
+tx = network.tx_utils.create_tx([spendable_output], [address])
+
 
 exit
 
@@ -40,17 +65,11 @@ exit
 
 
 
-#
-# # TODO: read transaction from blockcypher
-# tx_hex = "...."
-#
+
 # # get the spendable from the prior transaction
-# tx = network.tx.from_hex(tx_hex)
-# tx_out_index = 0
-# spendable = tx.tx_outs_as_spendable()[tx_out_index]
+
 #
 # # make sure the address is valid
-# assert network.parse.address(address) is not None
 #
 # # create the unsigned transaction
 # tx = network.tx_utils.create_tx([spendable], [payable])
