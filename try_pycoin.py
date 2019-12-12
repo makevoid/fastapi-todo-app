@@ -10,19 +10,22 @@ def pp(string):
   p = pprint.PrettyPrinter(indent=2)
   p.pprint(string)
 
+# generate a private key (save it in a file named .private_key)
+# rand = random.getrandbits(256)
+# priv_key = network.keys.private(secret_exponent=rand)
+# print("private key:")
+# print(priv_key.wif())
 
-rand = random.getrandbits(256)
-
-priv_key = network.keys.private(secret_exponent=rand)
+# load private key
+f = open(".private_key", "r")
+key_wif = f.read().strip()
+priv_key = network.parse.wif(key_wif)
 address = priv_key.address()
-print("private key:")
-print(priv_key.wif())
-
 print("address:")
 print(address)
 
 
-tx_id = "11e0a8a0ced85b8fd854527d8eb0e675bbba411ea5e04df75331908f9c4363a2"
+tx_id = "672d52e17d4ee1f8108062171c4d7d4558f6d056da701dd9733044028ecadaf5"
 
 url_rawtx_bcinfo = f"https://blockchain.info/rawtx/{tx_id}"
 
@@ -39,9 +42,11 @@ output_script = data["out"][output_index]["script"]
 url_rawtx_insight = f"https://insight.bitpay.com/api/rawtx/{tx_id}"
 
 req = requests.get(url=url_rawtx_insight)
+pp(req)
+
 data = req.json()
 print("rawtx insight:")
-pp(req)
+pp(data)
 
 tx_raw = data["rawtx"]
 
