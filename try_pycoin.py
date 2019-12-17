@@ -25,7 +25,7 @@ print("address:")
 print(address)
 
 
-tx_id = "672d52e17d4ee1f8108062171c4d7d4558f6d056da701dd9733044028ecadaf5"
+tx_id = "6b5d815a3842553c8be8038074fd2121ca76f8b0d5a5b1c26205673b4ae30900"
 
 url_rawtx_bcinfo = f"https://blockchain.info/rawtx/{tx_id}"
 
@@ -37,6 +37,7 @@ pp(data)
 
 
 output_index = 0
+# data["out"]["n"] # output number
 output_script = data["out"][output_index]["script"]
 
 url_rawtx_insight = f"https://insight.bitpay.com/api/rawtx/{tx_id}"
@@ -61,7 +62,8 @@ pp(spendable_output)
 
 assert network.parse.address(address) is not None
 
-tx = network.tx_utils.create_tx([spendable_output], [address])
+tx_fee = 1000  # around 5 sat/byte (1 sat/wu)
+tx = network.tx_utils.create_tx([spendable_output], [address], fee=tx_fee)
 
 print("tx:")
 pp(tx)
