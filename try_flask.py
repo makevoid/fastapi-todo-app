@@ -19,6 +19,5 @@ def hello():
 @app.route('/foo', methods=["POST"])
 def foo():
 
-
 if __name__ == '__main__':
     app.run()
