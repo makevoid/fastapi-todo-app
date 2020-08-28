@@ -3,18 +3,20 @@ import haml
 import mako.template
 import mako.lookup
 from waitress import serve
+import redis
 
 app = Flask(__name__)
+r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
 
-lookup = mako.lookup.TemplateLookup(["views"],
-    preprocessor=haml.preprocessor
-)
+lookup = mako.lookup.TemplateLookup(["views"], preprocessor=haml.preprocessor)
 
 @app.route('/')
 def hello():
-    foo = request.args.get('foo')
+    r.set('foo', 'bar')
+    # foo = request.args.get('foo')
     test = "1234"
     template = lookup.get_template('home.haml')
+    foo = r.get('foo')
     return template.render(test=test, foo=foo)
 
 # @app.route('/foo', methods=["POST"])
