@@ -1,5 +1,9 @@
 %%inherit(file="layout.haml")
 
 %%def(name="body()")
-  %p= test
-  %p= foo
+  %section
+    %h1 ToDos
+    %ul.todos
+      - for i in range(5):
+        %li.todo(**{ "data-id": str(i) }) ITEM ${i}
+    %a.button.is-primary Add
