@@ -10,3 +10,7 @@ html, html body {
   background: #EEE;
   color: #222;
 }
+
+ul.todos {
+  list-style-type: none;
+}

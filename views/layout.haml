@@ -2,8 +2,14 @@
 %html
   %head
     %title App
-    %link( href="/css/vendor/bulma.css", rel="stylesheet" )
-    %link( href="/css/style.css", rel="stylesheet" )
+    %link(href="/css/vendor/bulma.css", rel="stylesheet")
+    %link(href="/css/style.css", rel="stylesheet")
 
   %body
-    ${self.body()}
+    .container
+      .content
+        .box
+          ${self.body()}
+
+    %script(src="/js/vendor/axios.js", type="text/javascript")
+    %script(src="/js/app.js", type="text/javascript")
