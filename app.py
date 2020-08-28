@@ -21,16 +21,14 @@ def hello2():
 class Todo(object):
     """Todo items model"""
 
-    def __init__(self, text, checked=false):
+    def __init__(self, text, checked=False):
         super(Todo, self).__init__()
         self.text = text
         self.checked = checked
-        todos_count = R.incr('todos_count')
-        self.id = todos_count
         save()
 
     def check():
-        self.checked = !self.checked
+        self.checked = not self.checked
         save()
         return self
 
@@ -39,20 +37,25 @@ class Todo(object):
         save()
         return self
 
+    @classmethod
+    def create(text, checked=False):
+        todos_count = R.incr('todos_count')
+        self.id = todos_count
+
     def save():
         todo = json.dumps(self.__dict__)
         R.set(f'todos:${id}', todo)
         return self
 
     @classmethod
-    def get(todo_id)
+    def get(todo_id):
         todo = R.get(f'todos:${todo_id}')
         todo = json.loads(todo)
-        todo = new Todo
+        todo = Todo(**todo)
         return todo
 
     @classmethod
-    def all()
+    def all():
         todos_count = R.get('todos_count')
         todos_count = int(todos_count)
         todos = []
