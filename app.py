@@ -1,9 +1,9 @@
 from flask import Flask, request
 from waitress import serve
-from env import R
+from env import R, flask_options
 from lib import render
 
-app = Flask(__name__)
+app = Flask(__name__, **flask_options)
 
 @app.route('/')
 def hello():
