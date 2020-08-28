@@ -1,28 +1,11 @@
 from flask import Flask, request
-import haml
-import mako.template
-import mako.lookup
-from waitress import serve
 import redis
+from waitress import serve
+from lib import render
 
 app = Flask(__name__)
 r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
 
-lookup = mako.lookup.TemplateLookup(["views"], preprocessor=haml.preprocessor)
-
-TEMPLATES = {}
-
-def lookup_template(template_name):
-    template = TEMPLATES.get(template_name)
-    if template: return template
-    template = lookup.get_template(f'{template_name}.haml')
-    TEMPLATES[template_name] = template
-    return template
-
-
-def render(template_name, **args):
-    template = lookup_template(template_name)
-    return template.render(**args)
 
 @app.route('/')
 def hello():
