@@ -13,6 +13,10 @@ def hello():
     foo = R.get('foo')
     return render("home", test=test, foo=foo)
 
+@app.route('/hello')
+def hello2():
+    return render("page2")
+
 # @app.route('/foo', methods=["POST"])
 # def foo():
 
