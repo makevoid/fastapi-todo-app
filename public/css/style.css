@@ -13,4 +13,10 @@ html, html body {
 
 ul.todos {
   list-style-type: none;
+  font-size: 1.2em;
+}
+
+.todo label.done span {
+  text-decoration: line-through;
+  color: #888;
 }

@@ -9,7 +9,8 @@
           %input(type="hidden", name="checked", value=f"{not todo.checked}")
         %label.checkbox.checkbox-elem
           %input.checkbox(**{ "data-id": str(todo.id), "type": "checkbox", "checked": todo.checked })
-          &nbsp;${todo.text}
+          &nbsp;
+          %span= todo.text
 
 
   %section.box

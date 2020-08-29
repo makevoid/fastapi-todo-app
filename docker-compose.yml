@@ -6,6 +6,10 @@ services:
       context: .
     ports:
       - 3000
+    depends_on:
+      - redis
+    environment:
+      - APP_ENV=production
   nginx:
     build:
       context: nginx
@@ -13,3 +17,7 @@ services:
       - 80:80
     depends_on:
       - app
+  redis:
+    image: redis:latest
+    ports:
+      - 6380:6379 # comment out redis "ports" in production (you don't want to expose redis)

@@ -1,1 +1,4 @@
-uvicorn app:app --port 3000 --host 0.0.0.0 --reload 
+
+[ "$APP_ENV" != "production" ] && RELOAD=--reload 
+
+uvicorn app:app --port 3000 --host 0.0.0.0 $RELOAD
