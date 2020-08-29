@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - 3000
+  nginx:
+    build:
+      context: nginx
+    ports:
+      - 80:80
+    depends_on:
+      - app

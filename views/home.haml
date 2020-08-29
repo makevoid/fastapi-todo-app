@@ -1,25 +1,23 @@
 %%inherit(file="layout.haml")
 
 %%def(name="body()")
-  %section
-    %h1 To-do list
-    %ul.todos
-      - for i in range(len(todos)):
-        - todo = todos[i]
-        %li.todo(**{ "data-id": str(todo.id) })
-          %form(method="POST", action=f"/todos/{todo.id}")
-            %input(type="hidden", name="checked", value=f"{not todo.checked}")
-          %label.checkbox.checkbox-elem
-            %input.checkbox(**{ "data-id": str(todo.id), "type": "checkbox", "checked": todo.checked })
-            &nbsp;${todo.text}
+  %ul.todos
+    - for i in range(len(todos)):
+      - todo = todos[i]
+      %li.todo(**{ "data-id": str(todo.id) })
+        %form(method="POST", action=f"/todos/{todo.id}")
+          %input(type="hidden", name="checked", value=f"{not todo.checked}")
+        %label.checkbox.checkbox-elem
+          %input.checkbox(**{ "data-id": str(todo.id), "type": "checkbox", "checked": todo.checked })
+          &nbsp;${todo.text}
 
 
-    %section.box
-      %h1.title.is-4 Add item
-      %form(method="POST", action="/todos")
-        .field
-          .control
-            %input.input(name="item", type="text", placeholder="Buy milk")
-        .field
-          .control
-            %input.button.is-primary(type="submit", value="Add")
+  %section.box
+    %h1.title.is-4 Add item
+    %form(method="POST", action="/todos")
+      .field
+        .control
+          %input.input(name="item", type="text", placeholder="Buy milk")
+      .field
+        .control
+          %input.button.is-primary(type="submit", value="Add")

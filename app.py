@@ -1,45 +1,44 @@
-from flask import Flask, request, redirect, url_for, jsonify
-from waitress import serve
-from env import R, flask_options
+from typing import Optional
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+from env import R
 from lib import render
 from todo import Todo
 
-app = Flask(__name__, **flask_options)
+app = FastAPI()
+app.__name__ = 'App'
 
-@app.route('/')
+app.mount("/public", StaticFiles(directory="public"), name="public")
+
+@app.get('/', response_class=HTMLResponse)
 def root():
     todos = Todo.all()
     return render("home", todos=todos)
 
-@app.route('/hello')
+@app.get('/hello', response_class=HTMLResponse)
 def hello2():
     return render("page2")
 
-@app.route('/todos', methods=["POST"])
-def todo_create():
-    # text = request.form.get('item')
-    text = request.form['item']
-    todo = Todo.create(text)
+@app.post('/todos')
+def todo_create(item: str = Form(...)):
+    todo = Todo.create(item)
     print(f'Todo created: {todo.__dict__}')
-    return redirect(url_for('root'))
+    return RedirectResponse("/", status_code=303)
 
-@app.route('/todos/<int:todo_id>', methods=["POST"])
-def todo_update(todo_id):
-    text = request.form['item']
+@app.post('/todos/{todo_id}')
+def todo_update(todo_id: int, item: str = Form(...)):
     todo = Todo.get(todoId)
-    todo.update_text(text)
+    todo.update_text(item)
     print(f'Todo created: {todo.__dict__}')
-    return redirect(url_for('root'))
+    return RedirectResponse("/", status_code=303)
 
-@app.route('/todos/<int:todo_id>/check', methods=["POST"])
-def todo_check(todo_id):
+@app.post('/todos/{todo_id}/check')
+def todo_check(todo_id: int):
     todo = Todo.get(todo_id)
     todo.check()
     print(f'Todo {todo.id} checked/unchecked')
-    data = jsonify(todo.__dict__)
+    # data = jsonify(todo.__dict__)
+    data = todo.__dict__
     return data
-
-
-if __name__ == '__main__':
-    app.run(port=3000)
-    # serve(app, host='0.0.0.0', port=3000)
