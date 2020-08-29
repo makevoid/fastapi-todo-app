@@ -1,3 +1,5 @@
+# TODO: use pipfile instead of installing everything manually in docker
+
 [[source]]
 
 [packages]
