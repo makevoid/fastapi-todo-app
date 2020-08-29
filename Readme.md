@@ -33,6 +33,18 @@ This will run the python app via `uvicorn`.
 
 Then visit http://localhost:3000
 
+### Reset
+
+Delete is not currently implemented, to flush redis open the cli via:
+
+    redis-cli
+    
+Then issue a `flushdb` command:
+ 
+    flushdb
+    
+All your todos will be deleted
+
 ### Docker
 
 Build and run:
