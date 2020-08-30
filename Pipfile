@@ -1,10 +1,22 @@
-# TODO: use pipfile instead of installing everything manually in docker
-
 [[source]]
-
-[packages]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
 
 [dev-packages]
 
+[packages]
+fastapi = "0.61.0"
+uvicorn = "0.11.8"
+aiofiles = "0.5.0"
+python-multipart = "*"
+redis = "3.5.3"
+mako = "1.1.3"
+haml = {git = "https://github.com/mikeboers/pyhaml"}
+
 [requires]
 python_version = "3.7"
+
+# notes:
+#   install: pipenv install
+#   run the app: pipenv run uvicorn app:app --port 3000 --host 0.0.0.0
